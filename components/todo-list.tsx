@@ -51,11 +51,11 @@ export function TodoList({
       transition={{ duration: 0.2 }}
       className="flex flex-col gap-4 pb-28"
     >
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      {/* iOS Large Title */}
+      <div className="flex items-end justify-between">
         <div>
-          <h2 className="text-xl font-bold text-foreground">{title}</h2>
-          <p className="text-sm text-muted-foreground">{subtitle}</p>
+          <p className="text-xs font-medium text-muted-foreground">{subtitle}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
         </div>
         <div className={`rounded-full px-3 py-1 text-xs font-semibold ${badgeBg}`}>
           {completedCount}/{totalCount}

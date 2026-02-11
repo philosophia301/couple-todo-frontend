@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect } from "react"
 import { AnimatePresence } from "framer-motion"
-import { BirdIcon } from "@/components/bird-icon"
 import { TodoList } from "@/components/todo-list"
 import { BattleDashboard } from "@/components/battle-dashboard"
 import { TabBar, type TabId } from "@/components/tab-bar"
@@ -88,15 +87,6 @@ export default function Page() {
   return (
     <div className="flex min-h-screen items-start justify-center bg-background">
       <div className="w-full max-w-md px-5 py-6">
-        {/* Header */}
-        <header className="mb-6 flex items-center gap-3">
-          <BirdIcon size={44} />
-          <div>
-            <h1 className="text-lg font-bold text-foreground">LoveTodo</h1>
-            <p className="text-xs text-muted-foreground">{dateStr}</p>
-          </div>
-        </header>
-
         {/* Content */}
         <main>
           <AnimatePresence mode="wait">
@@ -104,7 +94,7 @@ export default function Page() {
               <TodoList
                 key="boy"
                 title="남자친구의 하루"
-                subtitle="오늘도 화이팅!"
+                subtitle={dateStr}
                 items={boyTodos}
                 onToggle={(id) => toggleTodo("boy", id)}
                 onDelete={(id) => deleteTodo("boy", id)}
@@ -116,7 +106,7 @@ export default function Page() {
               <TodoList
                 key="girl"
                 title="여자친구의 하루"
-                subtitle="오늘도 화이팅!"
+                subtitle={dateStr}
                 items={girlTodos}
                 onToggle={(id) => toggleTodo("girl", id)}
                 onDelete={(id) => deleteTodo("girl", id)}
@@ -129,6 +119,7 @@ export default function Page() {
                 key="dashboard"
                 boyTodos={boyTodos}
                 girlTodos={girlTodos}
+                dateStr={dateStr}
               />
             )}
           </AnimatePresence>

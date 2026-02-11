@@ -1,23 +1,21 @@
 "use client"
 
-import React from "react"
-
 import { motion } from "framer-motion"
-import { Flame, Trophy, Clock, Zap } from "lucide-react"
 import type { TodoItemData } from "./todo-item"
 
 interface BattleDashboardProps {
   boyTodos: TodoItemData[]
   girlTodos: TodoItemData[]
+  dateStr?: string
 }
 
 function StatCard({
-  icon,
+  emoji,
   label,
   value,
   delay,
 }: {
-  icon: React.ReactNode
+  emoji: string
   label: string
   value: string
   delay: number
@@ -29,16 +27,14 @@ function StatCard({
       transition={{ delay, type: "spring", stiffness: 300, damping: 25 }}
       className="flex flex-col items-center gap-2 rounded-3xl bg-card p-4 shadow-sm"
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary">
-        {icon}
-      </div>
+      <span className="text-3xl">{emoji}</span>
       <span className="text-xs font-medium text-muted-foreground">{label}</span>
       <span className="text-lg font-bold text-foreground">{value}</span>
     </motion.div>
   )
 }
 
-export function BattleDashboard({ boyTodos, girlTodos }: BattleDashboardProps) {
+export function BattleDashboard({ boyTodos, girlTodos, dateStr }: BattleDashboardProps) {
   const boyCompleted = boyTodos.filter((t) => t.completed).length
   const girlCompleted = girlTodos.filter((t) => t.completed).length
   const boyTotal = boyTodos.length
@@ -70,10 +66,11 @@ export function BattleDashboard({ boyTodos, girlTodos }: BattleDashboardProps) {
       transition={{ duration: 0.2 }}
       className="flex flex-col gap-5 pb-28"
     >
-      {/* Title */}
-      <div className="text-center">
-        <h2 className="text-xl font-bold text-foreground">{"오늘의 배틀"}</h2>
-        <p className="text-sm text-muted-foreground">{"누가 더 열심히 했을까?"}</p>
+      {/* iOS Large Title */}
+      <div>
+        {dateStr && <p className="text-xs font-medium text-muted-foreground">{dateStr}</p>}
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">{"오늘의 배틀"}</h1>
+        <p className="mt-0.5 text-sm text-muted-foreground">{"누가 더 열심히 했을까?"}</p>
       </div>
 
       {/* VS Battle Bar */}
@@ -106,7 +103,7 @@ export function BattleDashboard({ boyTodos, girlTodos }: BattleDashboardProps) {
         {/* Battle bar */}
         <div className="flex h-8 overflow-hidden rounded-full bg-muted">
           <motion.div
-            className="flex items-center justify-center rounded-l-full bg-boy text-xs font-bold text-primary-foreground"
+            className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-xs font-bold text-primary-foreground"
             initial={{ width: "50%" }}
             animate={{ width: `${boyRatio * 100}%` }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 25 }}
@@ -114,7 +111,7 @@ export function BattleDashboard({ boyTodos, girlTodos }: BattleDashboardProps) {
             {boyCompleted > 0 && boyCompleted}
           </motion.div>
           <motion.div
-            className="flex items-center justify-center rounded-r-full bg-girl text-xs font-bold text-primary-foreground"
+            className="flex items-center justify-center rounded-full bg-gradient-to-l from-rose-400 to-rose-500 text-xs font-bold text-primary-foreground"
             initial={{ width: "50%" }}
             animate={{ width: `${girlRatio * 100}%` }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 25 }}
@@ -135,37 +132,37 @@ export function BattleDashboard({ boyTodos, girlTodos }: BattleDashboardProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, type: "spring", stiffness: 300, damping: 25 }}
-        className="flex items-center justify-center gap-3 rounded-3xl bg-secondary p-4"
+        className="flex items-center justify-center gap-3 rounded-3xl bg-card p-5 shadow-sm"
       >
-        <Trophy className="h-6 w-6 text-primary" />
+        <span className="text-4xl">{"🏆"}</span>
         <div className="text-center">
           <p className="text-xs font-medium text-muted-foreground">{"오늘의 승자"}</p>
-          <p className="text-lg font-bold text-secondary-foreground">{winner}</p>
+          <p className="text-lg font-bold text-foreground">{winner}</p>
         </div>
       </motion.div>
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 gap-3">
         <StatCard
-          icon={<Zap className="h-5 w-5 text-primary" />}
+          emoji={"⚡️"}
           label="남자친구 점수"
           value={`${boyScore}점`}
           delay={0.5}
         />
         <StatCard
-          icon={<Zap className="h-5 w-5 text-primary" />}
+          emoji={"⚡️"}
           label="여자친구 점수"
           value={`${girlScore}점`}
           delay={0.55}
         />
         <StatCard
-          icon={<Flame className="h-5 w-5 text-primary" />}
+          emoji={"🔥"}
           label="총 완료"
           value={`${totalCompleted}개`}
           delay={0.6}
         />
         <StatCard
-          icon={<Clock className="h-5 w-5 text-primary" />}
+          emoji={"💤"}
           label="게으른 새"
           value={lazyBird}
           delay={0.65}
