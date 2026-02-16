@@ -15,7 +15,7 @@ interface TabBarProps {
 const tabs: { id: TabId; label: string; icon: React.ReactNode }[] = [
   {
     id: "boy",
-    label: "남자",
+    label: "은종",
     icon: <User className="h-5 w-5" />,
   },
   {
@@ -25,7 +25,7 @@ const tabs: { id: TabId; label: string; icon: React.ReactNode }[] = [
   },
   {
     id: "girl",
-    label: "여자",
+    label: "지은",
     icon: <User className="h-5 w-5" />,
   },
 ]
